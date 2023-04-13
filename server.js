@@ -1,12 +1,6 @@
 const mongoose = require("mongoose");
 const app = require("./app");
-const { DB_HOST } = require("./config");
-// require("dotenv").config();
-
-//
-
-// console.log(DB_HOST);
-// console.log(process.env);
+const { DB_HOST } = process.env;
 
 mongoose
   .connect(DB_HOST)
