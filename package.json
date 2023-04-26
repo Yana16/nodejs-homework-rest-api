@@ -2,24 +2,21 @@
   "name": "template",
   "version": "0.0.0",
   "private": true,
-  "main": "server.js",
   "scripts": {
-    "start": "cross-env DB_HOST=production node ./server.js",
-    "start:dev": "cross-env DB_HOST=development nodemon ./server.js",
+    "start": "cross-env NODE_ENV=production node ./server.js",
+    "start:dev": "cross-env NODE_ENV=development nodemon ./server.js",
     "lint": "eslint **/*.js",
     "lint:fix": "eslint --fix **/*.js"
   },
   "dependencies": {
     "cors": "2.8.5",
     "cross-env": "7.0.3",
-    "dotenv": "^16.0.3",
     "express": "4.17.1",
     "joi": "^17.9.1",
-    "mongoose": "^7.0.3",
+    "mongoose": "^7.0.5",
     "morgan": "1.10.0",
     "nanoid": "^3.0.2",
-    "node-fetch": "^3.3.1",
-    "yarn": "^1.22.19"
+    "node-fetch": "^3.3.1"
   },
   "devDependencies": {
     "eslint": "7.19.0",
@@ -29,8 +26,5 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "5.2.0",
     "nodemon": "^2.0.15"
-  },
-  "engines": {
-    "node": ">=14.20.1 <15"
   }
 }
