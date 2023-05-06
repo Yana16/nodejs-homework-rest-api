@@ -3,12 +3,30 @@ const ctrlWrapper = require("../utils/ctrlWrapper");
 const { Contact } = require("../models/contact");
 
 const listContacts = async (req, res) => {
-  const result = await Contact.find();
+  const { _id: owner } = req.user;
+  const { page = 1, limit = 20, favorite } = req.query;
+  const skip = (page - 1) * limit;
+  const result = await Contact.find({ owner }, "-createdAt -updatedAt", {
+    skip,
+    limit,
+  }).populate("owner", "name email");
+  const filteredContacts =
+    favorite === undefined
+      ? result
+      : result.filter((contact) => contact.favorite.toString() === favorite);
+
+  res.json(filteredContacts);
+};
+const contactsListFavourite = async (req, res) => {
+  const { _id: owner } = req.user;
+  const result = await Contact.find({ owner }, "-createdAt -updatedAt", {
+    favourite: true,
+  }).populate("owner", "name email");
   res.json(result);
 };
-
 const addContact = async (req, res) => {
-  const result = await Contact.create(req.body);
+  const { _id: owner } = req.user;
+  const result = await Contact.create({ ...req.body, owner });
   res.status(201).json(result);
 };
 const getContactById = async (req, res, next) => {
@@ -57,4 +75,5 @@ module.exports = {
   removeContact: ctrlWrapper(removeContact),
   updateContact: ctrlWrapper(updateContact),
   updateStatusContact: ctrlWrapper(updateStatusContact),
+  contactsListFavourite: ctrlWrapper(contactsListFavourite),
 };
