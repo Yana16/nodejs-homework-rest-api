@@ -23,6 +23,11 @@ const contactSchema = Schema(
     email: { type: String, required: [true, "Type in email"] },
     phone: { type: String, required: [true, "Type in phone number"] },
     favorite: { type: Boolean, default: false },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+      required: true,
+    },
   },
   { versionKey: false, timestamps: true }
 );
